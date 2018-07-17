@@ -167,20 +167,154 @@ if (err){
 } else {
     console.log(newDoc10.name + ' сохранен.');
 }
-// Обновление первого документа
-// console.log('newDoc._id '+newDoc._id);
-let idNewDoc = newDoc._id;
-Doc.findById(idNewDoc, function(err, doc) {
-    if(err) throw err;
-    // console.log('newDoc10._id '+newDoc10._id);
-    // console.log('res '+doc);
-    doc.srcDoc = newDoc10._id;
-    doc.save(function(err, res){
-        if (err) throw err;
-        console.log('Начальный документ перезаписан');
+});
+//11
+let newDoc11 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 11',
+    srcDoc: newDoc10._id,
+} );
+newDoc11.save(function (err, newDoc11) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc11.name);
+} else {
+    console.log(newDoc11.name + ' сохранен.');
+}
+});
+//12
+let newDoc12 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 12',
+    srcDoc: newDoc11._id,
+} );
+newDoc12.save(function (err, newDoc12) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc12.name);
+} else {
+    console.log(newDoc12.name + ' сохранен.');
+}
+});
+//13
+let newDoc13 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 13',
+    srcDoc: newDoc12._id,
+} );
+newDoc13.save(function (err, newDoc13) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc13.name);
+} else {
+    console.log(newDoc13.name + ' сохранен.');
+}
+});
+//14
+let newDoc14 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 14',
+    srcDoc: newDoc13._id,
+} );
+newDoc14.save(function (err, newDoc14) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc14.name);
+} else {
+    console.log(newDoc14.name + ' сохранен.');
+}
+});
+//15
+let newDoc15 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 15',
+    srcDoc: newDoc14._id,
+} );
+newDoc15.save(function (err, newDoc15) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc15.name);
+} else {
+    console.log(newDoc15.name + ' сохранен.');
+}
+});
+//16
+let newDoc16 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 16',
+    srcDoc: newDoc15._id,
+} );
+newDoc16.save(function (err, newDoc16) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc16.name);
+} else {
+    console.log(newDoc16.name + ' сохранен.');
+}
+});
+//17
+let newDoc17 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 17',
+    srcDoc: newDoc16._id,
+} );
+newDoc17.save(function (err, newDoc17) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc17.name);
+} else {
+    console.log(newDoc17.name + ' сохранен.');
+}
+});
+//18
+let newDoc18 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 18',
+    srcDoc: newDoc17._id,
+} );
+newDoc18.save(function (err, newDoc18) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc18.name);
+} else {
+    console.log(newDoc18.name + ' сохранен.');
+}
+});
+//19
+let newDoc19 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 19',
+    srcDoc: newDoc18._id,
+} );
+newDoc19.save(function (err, newDoc19) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc19.name);
+} else {
+    console.log(newDoc19.name + ' сохранен.');
+}
+});
+//20
+let newDoc20 = new Doc ( {
+    _id: new mongoose.Types.ObjectId(),
+    name: 'Документ № 20',
+    srcDoc: newDoc19._id,
+} );
+newDoc20.save(function (err, newDoc20) {
+if (err){
+    console.log("Что-то не так с документом " + newDoc20.name);
+} else {
+    console.log(newDoc20.name + ' сохранен.');
+}
+
+    // Обновление первого документа
+    // console.log('newDoc._id '+newDoc._id);
+    let idNewDoc = newDoc._id;
+    Doc.findById(idNewDoc, function(err, doc) {
+        if(err) throw err;
+        // console.log('newDoc10._id '+newDoc10._id);
+        // console.log('res '+doc);
+        doc.srcDoc = newDoc20._id;
+        doc.save(function(err, res){
+            if (err) throw err;
+            console.log('Начальный документ перезаписан');
+        });
     });
+
 });
-});
+
+
 
 
 
@@ -229,7 +363,15 @@ app.get('/doc/:id', function(req, res){
             if (err) throw err;
             console.log('docName'+docName);
             console.log(typeof docName);
-            res.render( 'doc.ejs', {doc: docs[ id - 1 ], src: docName} );
+
+            Doc.find({'srcDoc': docs[ id - 1 ]._id}, function(err, srcForRes){
+                if (err) throw err;
+                console.log('srcForRes '+srcForRes);
+                console.log('Тип '+ typeof srcForRes);
+                console.log('srcForRes.name '+srcForRes[0].name);
+                res.render( 'doc.ejs', {doc: docs[ id - 1 ], src: docName, srcFor: srcForRes} );
+            });
+            
         });
         // res.render( 'doc.ejs', {doc: docs[ id - 1 ]} );
     });

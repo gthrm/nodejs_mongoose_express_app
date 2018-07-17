@@ -11,8 +11,12 @@
     <div class="doc">
             <h1><%= doc.name%></h1>
             <p>id документа: <%= doc._id%></p><br>
-            <p>документ ссылается на <%= src.name%>  c id:   <%= doc.srcDoc%></p><br>
-            
+            <p>Этот документ ссылается на:</p>
+            <p><%= src.name%>  c id:   <%= doc.srcDoc%></p><br>
+            <p>На этот документ ссылается (ссылаются):</p>
+            <% for ( var i = 0; i < srcFor.length; i++ ) { %>
+                    <p> <%= srcFor[i].name%></p>
+                <% } %>
     </div>
 
 </body>
