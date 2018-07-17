@@ -1,0 +1,29 @@
+let UserSchema = new mongoose.Schema( {
+    // id: { type: Number, default: 0 },
+    useDocs: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    name: { type: String, default: 'Имя' },
+} );
+let User = mongoose.model("User", UserSchema);
+
+let AuthorSchema = new mongoose.Schema( {
+    // id: { type: Number, default: 0 },
+    useDocs: { type: String, default: 'Текст' },
+    name: { type: String, default: 'Имя' },
+} );
+let Author = mongoose.model("Author", AuthorSchema);
+
+
+
+    for (let i = 0; i<5; i++){
+            let newDocNew = new Doc ( {
+                srcDoc: newDoc._id,
+                name: 'Документ № ' + i,
+            } );
+            newDocNew.save(function (err, newDoc) {
+                if (err){
+                    console.log("Something goes wrong with user " + newDoc.name);
+                } else {
+                    console.log(newDoc.name + ' сохранен.')
+                }
+            });
+    };
