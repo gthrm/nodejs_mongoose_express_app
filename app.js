@@ -1,10 +1,7 @@
 const express = require( 'express' );
 const app = express();
 const mongoose = require( 'mongoose' );
-const bodyParser = require( 'body-parser' );
 
-app.use( bodyParser.urlencoded( {extended: true } ) );
-app.use( bodyParser.json() );
 
 let DocSchema = new mongoose.Schema( {
     // id: { type: Number, default: 0 },
@@ -54,7 +51,7 @@ let newDoc2 = new Doc ( {
 newDoc2.save(function (err, newDoc2) {
 if (err){
     console.log("Что-то не так с документом " + newDoc2.name);
-}else{
+} else {
     console.log(newDoc2.name + ' сохранен.');
 }
 });
@@ -89,20 +86,27 @@ app.get('/doc/:id', function(req, res){
     
     mongoose.connect('mongodb://adminuser:admin123@ds139251.mlab.com:39251/testbase');
     let Doc = mongoose.model("Doc", DocSchema);
-  
+    
     Doc.find(function (err, docs) {
-        var id = req.params.id;
-        console.log( '******** Вот тут **********' );
-        console.log( req.params.id );
-        console.log( '********' );
-        console.log( req.params );
-        console.log( {doc: docs[ id - 1 ].name} );
-        res.render( 'doc.ejs', { doc: docs[ id - 1 ] } );
+        if (err) throw err;
+        let id = req.params.id;
+        // console.log( req.params.id );
+        // console.log( req.params );
+        // console.log( docs[ id - 1 ] );
+        // console.log( {doc: docs[ id - 1 ].name} );
+        console.log(docs[ id - 1 ].srcDoc);
+        console.log(typeof docs[ id - 1 ].srcDoc);
+        let idForSrc = docs[ id - 1 ].srcDoc;
+        Doc.findById(idForSrc, function(err, docName){
+            if (err) throw err;
+            console.log(docName);
+        });
+        res.render( 'doc.ejs', {doc: docs[ id - 1 ]} );
     });
 
 });
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 80));
 app.listen(app.get('port'), function() {
-    console.log('Server started on port '+app.get('port'));
+    console.log('Сервер запущен на порту '+app.get('port'));
 });

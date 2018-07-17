@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Document</title>
 </head>
 <body>
     <div class="doc">
-            <h1><%doc.name%></h1>
-            <p><% doc.name%></p><br>
+            <h1><%= doc.name%></h1>
+            <p>id документа: <%= doc._id%></p><br>
+            <p>документ ссылается на документ c id:   <%= doc.srcDoc%></p><br>
+            
     </div>
+
 </body>
 </html>
