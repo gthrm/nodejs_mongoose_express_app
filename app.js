@@ -378,7 +378,7 @@ app.get('/doc/:id', function(req, res){
 
 });
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 80));
 app.listen(app.get('port'), function() {
     console.log('Сервер запущен на порту '+app.get('port'));
 });
