@@ -354,18 +354,26 @@ app.get('/doc/:id', function(req, res){
         let id = req.params.id;
         // console.log( req.params.id );
         // console.log( req.params );
-        console.log( 'docs: '+docs[ id - 1 ] );
-        console.log( {doc: docs[ id - 1 ].name} );
-        console.log('ссылка '+docs[ id - 1 ].srcDoc);
-        console.log('тип '+typeof docs[ id - 1 ].srcDoc);
+        // console.log( 'docs: '+docs[ id - 1 ] );
+        // console.log( {doc: docs[ id - 1 ].name} );
+        // console.log('ссылка '+docs[ id - 1 ].srcDoc);
+        // console.log('тип '+typeof docs[ id - 1 ].srcDoc);
         let idForSrc = docs[ id - 1 ].srcDoc;
         Doc.findById(idForSrc, function(err, docName){
-            if (err) throw err;
+            if (err) {
+                console.log('Ошибка поиска');
+                res.send(err);
+                return;
+            };
             console.log('docName'+docName);
             console.log(typeof docName);
 
             Doc.find({'srcDoc': docs[ id - 1 ]._id}, function(err, srcForRes){
-                if (err) throw err;
+                if (err) {
+                    console.log('Ошибка поиска');
+                    res.send(err);
+                    return;
+                };
                 console.log('srcForRes '+srcForRes);
                 console.log('Тип '+ typeof srcForRes);
                 console.log('srcForRes.name '+srcForRes[0].name);
