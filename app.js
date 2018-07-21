@@ -358,6 +358,10 @@ app.get('/doc/:id', function(req, res){
         // console.log( {doc: docs[ id - 1 ].name} );
         // console.log('ссылка '+docs[ id - 1 ].srcDoc);
         // console.log('тип '+typeof docs[ id - 1 ].srcDoc);
+        if (docs[ id - 1 ].srcDoc == undefined) {
+            console.log('Такого id нет');
+            res.render('index.ejs');
+        }
         let idForSrc = docs[ id - 1 ].srcDoc;
         Doc.findById(idForSrc, function(err, docName){
             if (err) {
