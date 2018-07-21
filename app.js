@@ -349,21 +349,26 @@ app.get('/doc/:id', function(req, res){
     mongoose.connect('mongodb://adminuser:admin123@ds139251.mlab.com:39251/testbase');
     let Doc = mongoose.model("Doc", DocSchema);
     
+
     Doc.find(function (err, docs) {
         if (err) throw err;
+        console.log('Количество документов в коллекции: ' + docs.length); //Количество документов
+        let numDocDB = docs.length;
         let id = req.params.id;
-        // console.log( req.params.id );
+        console.log( 'ID ' + req.params.id );
         // console.log( req.params );
         // console.log( 'docs: '+docs[ id - 1 ] );
         // console.log( {doc: docs[ id - 1 ].name} );
         // console.log('ссылка '+docs[ id - 1 ].srcDoc);
         // console.log('тип '+typeof docs[ id - 1 ].srcDoc);
-        if (docs[ id - 1 ].srcDoc == undefined) {
+        if (id > numDocDB) {
             console.log('Такого id нет');
             res.render('index.ejs');
-        }
-        let idForSrc = docs[ id - 1 ].srcDoc;
-        Doc.findById(idForSrc, function(err, docName){
+            return;
+        } else {
+            
+            let idForSrc = docs[ id - 1 ].srcDoc;
+            Doc.findById(idForSrc, function(err, docName){
             if (err) {
                 console.log('Ошибка поиска');
                 res.send(err);
@@ -385,12 +390,14 @@ app.get('/doc/:id', function(req, res){
             });
             
         });
+        }
+        
         // res.render( 'doc.ejs', {doc: docs[ id - 1 ]} );
     });
 
 });
 
-app.set('port', (process.env.PORT || 80));
+app.set('port', (process.env.PORT || 3000));
 app.listen(app.get('port'), function() {
     console.log('Сервер запущен на порту '+app.get('port'));
 });
